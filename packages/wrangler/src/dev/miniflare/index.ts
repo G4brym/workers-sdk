@@ -391,6 +391,8 @@ type WorkerOptionsBindings = Pick<
 	WorkerOptions,
 	| "bindings"
 	| "ai"
+	| "aiSearchNamespaces"
+	| "aiSearchInstances"
 	| "textBlobBindings"
 	| "dataBlobBindings"
 	| "wasmBindings"
@@ -497,6 +499,11 @@ export function buildMiniflareBindingOptions(
 		...extractBindingsOfType("unsafe_ratelimit", bindings),
 	];
 	const aiBindings = extractBindingsOfType("ai", bindings);
+	const aiSearchNamespaceBindings = extractBindingsOfType(
+		"ai_search_namespace",
+		bindings
+	);
+	const aiSearchBindings = extractBindingsOfType("ai_search", bindings);
 	const imagesBindings = extractBindingsOfType("images", bindings);
 	const mediaBindings = extractBindingsOfType("media", bindings);
 	const browserBindings = extractBindingsOfType("browser", bindings);
@@ -596,6 +603,14 @@ export function buildMiniflareBindingOptions(
 		warnOrError("ai", ai.remote, "always-remote");
 	}
 
+	for (const _ns of aiSearchNamespaceBindings) {
+		warnOrError("ai_search_namespaces", undefined, "always-remote");
+	}
+
+	for (const _inst of aiSearchBindings) {
+		warnOrError("ai_search", undefined, "always-remote");
+	}
+
 	for (const media of mediaBindings) {
 		warnOrError("media", media.remote, "always-remote");
 	}
@@ -688,6 +703,33 @@ export function buildMiniflareBindingOptions(
 						binding: aiBindings[0].binding,
 						remoteProxyConnectionString,
 					}
+				: undefined,
+
+		aiSearchNamespaces:
+			aiSearchNamespaceBindings.length > 0
+				? Object.fromEntries(
+						aiSearchNamespaceBindings.map((ns) => [
+							ns.binding,
+							{
+								namespace: ns.namespace,
+								remoteProxyConnectionString,
+							},
+						])
+					)
+				: undefined,
+
+		aiSearchInstances:
+			aiSearchBindings.length > 0
+				? Object.fromEntries(
+						aiSearchBindings.map((inst) => [
+							inst.binding,
+							{
+								instance_name: inst.instance_name,
+								namespace: inst.namespace ?? "default",
+								remoteProxyConnectionString,
+							},
+						])
+					)
 				: undefined,
 
 		kvNamespaces: Object.fromEntries(

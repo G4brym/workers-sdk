@@ -83,6 +83,11 @@ export function printBindings(
 	const queues = extractBindingsOfType("queue", bindings);
 	const d1_databases = extractBindingsOfType("d1", bindings);
 	const vectorize = extractBindingsOfType("vectorize", bindings);
+	const ai_search_namespaces = extractBindingsOfType(
+		"ai_search_namespace",
+		bindings
+	);
+	const ai_search = extractBindingsOfType("ai_search", bindings);
 	const hyperdrive = extractBindingsOfType("hyperdrive", bindings);
 	const r2_buckets = extractBindingsOfType("r2_bucket", bindings);
 	const logfwdr = extractBindingsOfType("logfwdr", bindings);
@@ -321,6 +326,28 @@ export function printBindings(
 					}),
 				};
 			})
+		);
+	}
+
+	if (ai_search_namespaces.length > 0) {
+		output.push(
+			...ai_search_namespaces.map(({ binding, namespace }) => ({
+				name: binding,
+				type: getBindingTypeFriendlyName("ai_search_namespace"),
+				value: namespace,
+				mode: getMode({ isSimulatedLocally: false }),
+			}))
+		);
+	}
+
+	if (ai_search.length > 0) {
+		output.push(
+			...ai_search.map(({ binding, instance_name, namespace }) => ({
+				name: binding,
+				type: getBindingTypeFriendlyName("ai_search"),
+				value: `${instance_name} (namespace: ${namespace ?? "default"})`,
+				mode: getMode({ isSimulatedLocally: false }),
+			}))
 		);
 	}
 
