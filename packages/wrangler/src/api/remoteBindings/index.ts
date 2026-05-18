@@ -48,6 +48,11 @@ export function pickRemoteBindings(
 				return true;
 			}
 
+			if (binding.type === "web_search") {
+				// Web Search bindings are always remote
+				return true;
+			}
+
 			return "remote" in binding && binding["remote"];
 		})
 	);

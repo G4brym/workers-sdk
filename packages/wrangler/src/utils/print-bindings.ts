@@ -88,6 +88,7 @@ export function printBindings(
 		bindings
 	);
 	const ai_search = extractBindingsOfType("ai_search", bindings);
+	const web_search = extractBindingsOfType("web_search", bindings);
 	const hyperdrive = extractBindingsOfType("hyperdrive", bindings);
 	const r2_buckets = extractBindingsOfType("r2_bucket", bindings);
 	const logfwdr = extractBindingsOfType("logfwdr", bindings);
@@ -349,6 +350,19 @@ export function printBindings(
 				type: getBindingTypeFriendlyName("ai_search"),
 				value: instance_name ? String(instance_name) : undefined,
 				mode: getMode({ isSimulatedLocally: false }),
+			}))
+		);
+	}
+
+	if (web_search.length > 0) {
+		output.push(
+			...web_search.map(({ binding, remote }) => ({
+				name: binding,
+				type: getBindingTypeFriendlyName("web_search"),
+				value: undefined,
+				mode: getMode({
+					isSimulatedLocally: context.remoteBindingsDisabled || !remote,
+				}),
 			}))
 		);
 	}

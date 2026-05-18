@@ -2019,6 +2019,50 @@ describe("normalizeAndValidateConfig()", () => {
 			});
 		});
 
+		describe("[web_search]", () => {
+			it("should accept a valid web_search binding", ({ expect }) => {
+				const { diagnostics } = normalizeAndValidateConfig(
+					{ web_search: { binding: "WEBSEARCH" } } as RawConfig,
+					undefined,
+					undefined,
+					{ env: undefined }
+				);
+
+				expect(diagnostics.hasErrors()).toBe(false);
+				expect(diagnostics.hasWarnings()).toBe(false);
+			});
+
+			it("should error if web_search is an array", ({ expect }) => {
+				const { diagnostics } = normalizeAndValidateConfig(
+					{ web_search: [] } as unknown as RawConfig,
+					undefined,
+					undefined,
+					{ env: undefined }
+				);
+
+				expect(diagnostics.hasWarnings()).toBe(false);
+				expect(diagnostics.renderErrors()).toMatchInlineSnapshot(`
+					"Processing wrangler configuration:
+					  - The field "web_search" should be an object but got []."
+				`);
+			});
+
+			it("should error if web_search has no binding name", ({ expect }) => {
+				const { diagnostics } = normalizeAndValidateConfig(
+					{ web_search: {} } as unknown as RawConfig,
+					undefined,
+					undefined,
+					{ env: undefined }
+				);
+
+				expect(diagnostics.hasWarnings()).toBe(false);
+				expect(diagnostics.renderErrors()).toMatchInlineSnapshot(`
+					"Processing wrangler configuration:
+					  - binding should have a string "binding" field."
+				`);
+			});
+		});
+
 		// Vectorize
 		describe("[vectorize]", () => {
 			it("should error if vectorize is an object", ({ expect }) => {
