@@ -1,6 +1,5 @@
 import { AI_PLUGIN, AI_PLUGIN_NAME } from "./ai";
 import { AI_SEARCH_PLUGIN, AI_SEARCH_PLUGIN_NAME } from "./ai-search";
-import { WEB_SEARCH_PLUGIN, WEB_SEARCH_PLUGIN_NAME } from "./web-search";
 import {
 	ANALYTICS_ENGINE_PLUGIN,
 	ANALYTICS_ENGINE_PLUGIN_NAME,
@@ -41,6 +40,7 @@ import {
 } from "./version-metadata";
 import { VPC_NETWORKS_PLUGIN, VPC_NETWORKS_PLUGIN_NAME } from "./vpc-networks";
 import { VPC_SERVICES_PLUGIN, VPC_SERVICES_PLUGIN_NAME } from "./vpc-services";
+import { WEB_SEARCH_PLUGIN, WEB_SEARCH_PLUGIN_NAME } from "./web-search";
 import {
 	WORKER_LOADER_PLUGIN,
 	WORKER_LOADER_PLUGIN_NAME,
