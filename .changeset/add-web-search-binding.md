@@ -16,7 +16,7 @@ Cloudflare Web Search is a managed, zero-setup web discovery primitive for agent
 
 There is exactly one shared web corpus, so there is no namespace, instance, or other field to specify -- only the variable name. The binding exposes a single `search()` method that returns URLs and catalog metadata for a query. Web Search is discovery-only -- to read a result's content the caller invokes the global `fetch()` API against the result's `url`.
 
-The binding is **always remote** in local development: Miniflare proxies to the production Web Search service via the remote-bindings transport. Adds the `websearch:run` OAuth scope to `wrangler login`.
+The binding is **always remote** in local development: Miniflare proxies to the production Web Search service via the remote-bindings transport. Adds the `websearch.run` OAuth scope to `wrangler login`.
 
 Also adds a `wrangler websearch search` command for running ad-hoc queries from the CLI:
 
