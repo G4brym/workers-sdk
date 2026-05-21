@@ -89,6 +89,7 @@ describe("normalizeAndValidateConfig()", () => {
 			text_blobs: undefined,
 			browser: undefined,
 			ai: undefined,
+			web_search: undefined,
 			version_metadata: undefined,
 			triggers: {
 				crons: undefined,
